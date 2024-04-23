@@ -15,9 +15,12 @@ botoes[i].onclick = function(){
 }
 
 const contadores = document.querySelectorAll(".contador");
-const tempoObjetivo1 = new Date("2024-10-05T00:00:00");
+const tempoObjetivo1 = new Date("2024-01-05T00:00:00");
+const tempoObjetivo2 = new Date("2024-11-05T00:00:00");
+const tempoObjetivo3 = new Date("2024-12-05T00:00:00");
+const tempoObjetivo4 = new Date("2025-01-05T00:00:00");
 
-contadores[0].textContent = calculaTempo(tempoObjetivo1);
+const tempos = [tempoObjetivo1,tempoObjetivo2,tempoObjetivo3,tempoObjetivo4];
 
 function calculaTempo(tempoObjetivo){
     let tempoAtual = new Date();
@@ -30,6 +33,26 @@ function calculaTempo(tempoObjetivo){
     segundos %= 60;
     minutos %= 60;
     horas %=24;
-
-    return dias + " dias " + horas + " horas " + minutos + " minutos " + segundos + " segundos ";
+    if (tempoFinal > 0){
+        return [dias,horas,minutos,segundos];
+    } else {
+        return [0,0,0,0];
+    }
 }
+
+function atualizarCronometro(){
+    document.getElementById("dias0").textContent = calculaTempo(tempos[1])[0];
+    document.getElementById("horas0").textContent = calculaTempo(tempos[1])[1];
+    document.getElementById("min0").textContent = calculaTempo(tempos[1])[2];
+    document.getElementById("seg0").textContent = calculaTempo(tempos[1])[3];
+    for (let i=0; i<contadores.length;i++){
+        //contadores[i].textContent = calculaTempo(tempos[i]);
+    }    
+}
+
+function comecaCronometro(){
+    atualizarCronometro();
+    setInterval(atualizarCronometro,1000);
+}
+
+comecaCronometro();
